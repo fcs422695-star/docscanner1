@@ -1,0 +1,38 @@
+name: Build DocScanner Pro Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Extract ZIP
+        run: |
+          Expand-Archive -Path DocScanner_Pro_v3.zip -DestinationPath extracted -Force
+          Copy-Item -Recurse -Force extracted/docscanner/* .
+        shell: powershell
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Windows EXE
+        run: npm run build-win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: DocScanner-Pro-Windows-Setup
+          path: dist/*.exe
+          retention-days: 30
