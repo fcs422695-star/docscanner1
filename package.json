@@ -1,0 +1,58 @@
+{
+  "name": "docscanner-pro",
+  "version": "1.0.0",
+  "description": "Professional Document Scanner",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder build --win --linux",
+    "build-win": "electron-builder build --win",
+    "build-linux": "electron-builder build --linux"
+  },
+  "build": {
+    "appId": "com.docscanner.pro",
+    "productName": "DocScanner Pro",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "api/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "category": "Office"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "keywords": [],
+  "author": "DocScanner Pro",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5",
+    "pdfkit": "^0.14.0",
+    "uuid": "^9.0.0",
+    "jimp": "^0.22.10"
+  }
+}
